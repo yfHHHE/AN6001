@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template, request
 import textblob
 import google.generativeai as gnai
-
+import os
 app = Flask("__name__")
 
 @app.route("/",methods=['GET','POST'])
@@ -31,7 +31,7 @@ def AI():
 @app.route("/AI_result",methods=['GET','POST'])
 def AI_result():
     q = request.form.get("q")
-    api = 'AIzaSyDMGJl5TE73oqQ7UWOqaE4Z1TPpHNfjjPM'
+    api = os.getenv('makersuite')
     gnai.configure(api_key=api)
     model = gnai.GenerativeModel("gemini-1.5-flash")
     r = model.generate_content(q)
